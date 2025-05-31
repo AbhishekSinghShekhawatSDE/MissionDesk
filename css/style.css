@@ -1,0 +1,1740 @@
+/* style.css - MissionDesk Premium Redesign */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+    /* Color Palette */
+    --color-background: #ffffff;
+    --color-background-alt: #f7f8fa;
+    --color-text-primary: #111827;
+    --color-text-secondary: #4b5563;
+    --color-text-muted: #9ca3af;
+    --color-primary: #4f46e5;
+    --color-primary-hover: #4338ca;
+    --color-secondary-color: #10b981; /* For accents if needed, e.g., success or highlights */
+    --color-border: #e5e7eb;
+    --color-border-input: #d1d5db;
+    --color-focus-ring: rgba(79, 70, 229, 0.3);
+
+    --color-success-bg: #D1FAE5;
+    --color-success-text: #065F46;
+    --color-success-border: #A7F3D0;
+    --color-error-bg: #FEE2E2;
+    --color-error-text: #991B1B;
+    --color-error-border: #FECACA;
+
+    /* Typography */
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    
+    /* Spacing & Sizing */
+    --container-max-width: 1280px;
+    --spacing-unit: 8px;
+    --border-radius-sm: 4px;
+    --border-radius-md: 6px;
+    --border-radius-lg: 8px;
+
+    /* Transitions & Shadows */
+    --transition-base: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --box-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --box-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --box-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+/* --- Global Resets & Base Styles --- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    border-style: solid;
+    border-color: var(--color-border);
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+}
+
+body {
+    font-family: var(--font-sans);
+    color: var(--color-text-primary);
+    background-color: var(--color-background);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: clip;
+}
+body.no-scroll {
+    overflow: hidden;
+}
+
+img, svg, video, canvas, audio, iframe, embed, object {
+    display: block;
+    vertical-align: middle;
+    max-width: 100%;
+    height: auto;
+}
+
+/* --- Typography --- */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--color-text-primary);
+    letter-spacing: -0.025em;
+}
+
+h1 { font-size: clamp(2.5rem, 1.6875rem + 2.8125vw, 4rem); margin-bottom: calc(var(--spacing-unit) * 4); }
+h2 { font-size: clamp(2rem, 1.5rem + 2vw, 3rem); margin-bottom: calc(var(--spacing-unit) * 3); }
+h3 { font-size: clamp(1.5rem, 1.25rem + 1vw, 2rem); margin-bottom: calc(var(--spacing-unit) * 2); }
+h4 { font-size: clamp(1.125rem, 1rem + 0.5vw, 1.5rem); margin-bottom: calc(var(--spacing-unit) * 1.5); }
+
+p {
+    color: var(--color-text-secondary);
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    line-height: 1.7;
+    max-width: 70ch;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: var(--transition-base);
+}
+a:hover {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 2px;
+}
+
+/* --- Layouts & Components --- */
+.container {
+    width: 92%;
+    max-width: var(--container-max-width);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section {
+    padding-top: clamp(4rem, 2.5rem + 6vw, 7.5rem);
+    padding-bottom: clamp(4rem, 2.5rem + 6vw, 7.5rem);
+}
+.section:nth-child(even) { /* For alternating section backgrounds */
+    background-color: var(--color-background-alt);
+}
+
+.section-title {
+    text-align: center;
+}
+.section-subtitle {
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: clamp(1rem, 0.875rem + 0.5vw, 1.25rem);
+    max-width: 65ch;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: calc(var(--spacing-unit) * -2);
+    margin-bottom: calc(var(--spacing-unit) * 6);
+}
+
+/* --- Navbar --- */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    padding: calc(var(--spacing-unit) * 2) 0;
+    box-shadow: var(--box-shadow-sm);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.navbar.scrolled { /* Optional: Add via JS if needed for more pronounced scroll effect */
+    background-color: var(--color-background);
+    box-shadow: var(--box-shadow-md);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--spacing-unit) * 1.5);
+    color: var(--color-text-primary);
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+.nav-logo img {
+    height: 32px;
+}
+.nav-logo-text {
+    display: none; /* Hidden on mobile, shown on desktop via media query */
+}
+
+.nav-toggle {
+    display: block;
+    background: none;
+    border: none;
+    padding: var(--spacing-unit);
+    cursor: pointer;
+    z-index: 1001;
+    transition: opacity 0.2s ease;
+}
+.nav-toggle:hover { opacity: 0.7; }
+.nav-toggle svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--color-text-primary);
+    stroke-width: 2; /* Ensure stroke width is set if using stroke-based icons */
+    fill: var(--color-text-primary); /* Ensure fill is set if using fill-based icons */
+}
+
+.nav-links {
+    list-style: none;
+    display: none; /* Initially hidden */
+    flex-direction: column;
+    position: fixed;
+    top: 0; /* Starts from the very top */
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Make it full viewport height */
+    background-color: var(--color-background);
+    /* Padding: top should account for navbar height if navbar is separate,
+       otherwise, padding for content from edges */
+    padding: calc(var(--spacing-unit) * 8) calc(var(--spacing-unit) * 3) calc(var(--spacing-unit) * 3);
+    box-shadow: var(--box-shadow-lg);
+    overflow-y: auto; /*  IMPORTANT: Allow vertical scrolling WITHIN the menu if content is too tall */
+    z-index: 999;
+    transform: translateX(-100%);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-links.active {
+    display: flex; /* Show the menu */
+    transform: translateX(0);
+}
+
+.nav-links li {
+    width: 100%;
+}
+
+.nav-links a {
+    display: block;
+    padding: calc(var(--spacing-unit) * 1.75) 0; /* Slightly more padding for better tap targets */
+    font-size: 1.25rem; /* Slightly larger font for mobile menu */
+    font-weight: 500;
+    color: var(--color-text-primary);
+    border-bottom: 1px solid var(--color-border);
+    text-decoration: none;
+    text-align: center; /* Center text for a common mobile menu look */
+}
+.nav-links a:hover,
+.nav-links a.active { /* .active might be less relevant here if menu closes on click */
+    color: var(--color-primary);
+    background-color: var(--color-background-alt); /* Subtle hover/active background */
+}
+.nav-links li:last-child a {
+    border-bottom: none;
+}
+
+/* Ensure body doesn't scroll when mobile menu is open */
+body.no-scroll {
+    overflow: hidden;
+}
+
+@media (min-width: 769px) { /* Desktop Navigation */
+    .nav-logo-text {
+        display: inline-block;
+    }
+    .nav-toggle {
+        display: none;
+    }
+    .nav-links {
+        display: flex;
+        flex-direction: row;
+        position: static;
+        width: auto;
+        height: auto;
+        background-color: transparent;
+        padding: 0;
+        box-shadow: none;
+        overflow-y: visible;
+        transform: translateX(0);
+        gap: calc(var(--spacing-unit) * 3);
+    }
+    .nav-links li {
+        width: auto;
+    }
+    .nav-links a {
+        padding: calc(var(--spacing-unit) * 0.5) 0;
+        font-size: 0.9375rem; /* 15px */
+        font-weight: 500;
+        color: var(--color-text-secondary);
+        border-bottom: none;
+        position: relative;
+    }
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 0;
+        height: 2px;
+        background-color: var(--color-primary);
+        transition: width 0.3s ease;
+    }
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+        width: 100%;
+    }
+    .nav-links a.active {
+        color: var(--color-text-primary);
+    }
+    .nav-links a:hover { /* Keep hover distinct from active */
+        color: var(--color-primary);
+        text-decoration: none;
+    }
+}
+
+/* --- Buttons --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(var(--spacing-unit) * 1.25) calc(var(--spacing-unit) * 3);
+    border-radius: var(--border-radius-md);
+    font-weight: 500;
+    font-size: 0.9375rem; /* 15px */
+    line-height: 1.5;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition-base);
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+.btn svg {
+    margin-right: var(--spacing-unit);
+    width: 18px;
+    height: 18px;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    box-shadow: var(--box-shadow-sm);
+}
+.btn-primary:hover {
+    background-color: var(--color-primary-hover);
+    color: var(--color-background);
+    box-shadow: var(--box-shadow-md);
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+.btn-secondary {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    border-color: var(--color-border-input);
+    box-shadow: var(--box-shadow-sm);
+}
+.btn-secondary:hover {
+    background-color: var(--color-background-alt);
+    border-color: #adb5bd;
+    color: var(--color-text-primary);
+    box-shadow: var(--box-shadow-md);
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+.btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--spacing-unit) * 2);
+    align-items: center;
+}
+
+/* --- Hero Section --- */
+.hero {
+    padding-top: clamp(3rem, 1.5rem + 5vw, 6rem);
+    padding-bottom: clamp(4rem, 2.5rem + 6vw, 8rem);
+    text-align: center;
+}
+.hero .container {
+    max-width: 800px;
+}
+.hero h1 {
+    font-weight: 800;
+    letter-spacing: -0.04em;
+}
+.hero p {
+    font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+    color: var(--color-text-secondary);
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: calc(var(--spacing-unit) * 4);
+    max-width: 60ch;
+}
+.hero .btn-group {
+    justify-content: center;
+}
+
+/* --- Features Grid / Steps Grid --- */
+.features-grid, .steps-grid {
+    display: grid;
+    gap: calc(var(--spacing-unit) * 4);
+}
+@media (min-width: 640px) {
+    .features-grid, .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (min-width: 1024px) {
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .steps-grid {
+         grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.feature-item, .step-item {
+    background-color: var(--color-background);
+    padding: calc(var(--spacing-unit) * 3);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--box-shadow-sm);
+    transition: var(--transition-base);
+    text-align: left;
+}
+.feature-item:hover, .step-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--box-shadow-lg);
+}
+.feature-icon, .step-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(var(--spacing-unit) * 6);
+    height: calc(var(--spacing-unit) * 6);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    margin-bottom: calc(var(--spacing-unit) * 2);
+}
+.feature-icon svg, .step-icon svg {
+    width: calc(var(--spacing-unit) * 3);
+    height: calc(var(--spacing-unit) * 3);
+}
+.feature-item h3, .step-item h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-unit);
+}
+.feature-item p, .step-item p {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0; /* Remove default p margin if icon/title above */
+}
+
+
+/* --- Campaign Cards --- */
+.campaign-grid {
+    display: grid;
+    gap: calc(var(--spacing-unit) * 3);
+}
+@media (min-width: 640px) {
+    .campaign-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+    .campaign-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.campaign-card {
+    background-color: var(--color-background);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--box-shadow-md);
+    transition: var(--transition-base);
+}
+.campaign-card:hover {
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: var(--box-shadow-lg);
+}
+.campaign-card-header {
+    background-color: var(--color-background-alt);
+    padding: calc(var(--spacing-unit) * 3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100px;
+}
+.campaign-card-header svg {
+    width: 40px;
+    height: 40px;
+    fill: var(--color-primary);
+}
+.campaign-card-content {
+    padding: calc(var(--spacing-unit) * 3);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.campaign-card-content h3 {
+    font-size: 1.375rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-unit);
+}
+.campaign-card-content h3 a {
+    color: var(--color-text-primary);
+}
+.campaign-card-content h3 a:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+.campaign-card-company {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+    display: flex;
+    align-items: center;
+    gap: calc(var(--spacing-unit) * 0.75);
+}
+.campaign-card-company svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+.campaign-card-description {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    margin-bottom: calc(var(--spacing-unit) * 2.5);
+    flex-grow: 1;
+    line-height: 1.6;
+    /* Clamp text to 3 lines */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: calc(1.6em * 3); /* Ensure space for 3 lines */
+}
+.campaign-card-tags {
+    margin-bottom: calc(var(--spacing-unit) * 2.5);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-unit);
+}
+.tag {
+    background-color: #eef2ff; /* Light indigo from Tailwind's indigo-100 */
+    color: #4338ca; /* Darker indigo text from Tailwind's indigo-700 */
+    font-size: 0.75rem;
+    padding: calc(var(--spacing-unit) * 0.5) var(--spacing-unit);
+    border-radius: var(--border-radius-sm);
+    font-weight: 500;
+    line-height: 1;
+}
+.campaign-card .btn {
+    margin-top: auto;
+    width: 100%;
+}
+
+/* --- Forms --- */
+.form-section .form-container { /* This targets the container on list-your-campaign and contact pages */
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--color-background);
+    padding: calc(var(--spacing-unit) * 4) calc(var(--spacing-unit) * 5);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--box-shadow-md);
+}
+
+.form-section .form-container .section-title { /* For h1 inside form container */
+    margin-top: 0;
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+    text-align: center;
+}
+.form-section .form-container > p { /* For intro paragraph inside form container */
+    text-align: center;
+    max-width: 65ch;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: calc(var(--spacing-unit) * 4);
+}
+.form-section .form-container h3 { /* Subheadings within forms */
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-top: calc(var(--spacing-unit) * 4);
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    padding-bottom: var(--spacing-unit);
+    border-bottom: 1px solid var(--color-border);
+}
+.form-section .form-container h3:first-of-type {
+    margin-top: 0; /* Remove top margin for the first h3 (e.g., Company Information) */
+}
+
+
+.form-group {
+    margin-bottom: calc(var(--spacing-unit) * 2.5);
+}
+.form-group label {
+    display: block;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-unit);
+}
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="url"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: calc(var(--spacing-unit) * 1.25) calc(var(--spacing-unit) * 1.5);
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--border-radius-md);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--color-text-primary);
+    background-color: var(--color-background);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="tel"]:focus,
+.form-group input[type="url"]:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+}
+.form-feedback {
+    margin-top: calc(var(--spacing-unit) * 2);
+    padding: var(--spacing-unit) calc(var(--spacing-unit) * 1.5);
+    border-radius: var(--border-radius-md);
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    display: none;
+}
+.form-feedback.success {
+    background-color: var(--color-success-bg);
+    color: var(--color-success-text);
+    border: 1px solid var(--color-success-border);
+    display: block;
+}
+.form-feedback.error {
+    background-color: var(--color-error-bg);
+    color: var(--color-error-text);
+    border: 1px solid var(--color-error-border);
+    display: block;
+}
+
+/* Spinner for form submissions */
+.spinner { animation: rotate 1s linear infinite; width: 1.25em; height: 1.25em; margin-right: 0.5em; display: inline-block; vertical-align: middle; }
+.spinner .path { stroke: currentColor; stroke-linecap: round; animation: dash 1.5s ease-in-out infinite; fill:none; stroke-width: 2px;}
+@keyframes rotate { 100% { transform: rotate(360deg); } }
+@keyframes dash {
+    0% { stroke-dasharray: 1, 150; stroke-dashoffset: 0; }
+    50% { stroke-dasharray: 90, 150; stroke-dashoffset: -35; }
+    100% { stroke-dasharray: 90, 150; stroke-dashoffset: -124; }
+}
+
+
+/* --- Footer --- */
+.site-footer {
+    background-color: var(--color-text-primary);
+    color: var(--color-text-muted);
+    padding-top: calc(var(--spacing-unit) * 8);
+    padding-bottom: calc(var(--spacing-unit) * 3);
+    font-size: 0.875rem;
+    margin-top: auto; /* Pushes footer to bottom if content is short */
+}
+
+.footer-grid {
+    display: grid;
+    gap: calc(var(--spacing-unit) * 3);
+    padding-bottom: calc(var(--spacing-unit) * 4);
+    grid-template-columns: 1fr; /* Mobile default: 1 column */
+}
+
+@media (min-width: 640px) { /* Tablet: 2 columns */
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: calc(var(--spacing-unit) * 4);
+    }
+}
+
+@media (min-width: 992px) { /* Desktop: 4 columns */
+    .footer-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1200px) { /* Large Desktop: 4 columns, first one wider */
+    .footer-grid {
+        grid-template-columns: 1.5fr 1fr 1fr 1fr; /* MissionDesk column wider */
+    }
+}
+
+.footer-col {
+    min-width: 180px; /* Prevent extreme squishing */
+}
+.footer-col h4 {
+    color: var(--color-background);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+}
+.footer-col p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-unit);
+    line-height: 1.6;
+    max-width: none; /* Override default p max-width for footer */
+}
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+}
+.footer-col li {
+    margin-bottom: var(--spacing-unit);
+}
+.footer-col a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.footer-col a:hover {
+    color: var(--color-background);
+    text-decoration: underline;
+}
+.footer-contact-item {
+    display: flex;
+    align-items: center; /* Align icon and text */
+    gap: var(--spacing-unit);
+    margin-bottom: var(--spacing-unit);
+}
+.footer-contact-item svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    flex-shrink: 0;
+}
+.footer-social-links {
+    display: flex;
+    gap: calc(var(--spacing-unit) * 1.5);
+    margin-top: var(--spacing-unit);
+}
+.footer-social-links a {
+    color: var(--color-text-muted);
+    display: inline-block;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+.footer-social-links a:hover {
+    color: var(--color-background);
+    transform: scale(1.1);
+}
+.footer-social-links svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor; /* Ensure SVGs in social links use the anchor's color */
+}
+
+.footer-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the <p> blocks horizontally */
+    padding-top: calc(var(--spacing-unit) * 3);
+    margin-top: calc(var(--spacing-unit) * 4);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.8125rem; /* 13px */
+    color: var(--color-text-muted);
+}
+.footer-bottom p {
+    margin-bottom: calc(var(--spacing-unit) * 0.5);
+    text-align: center; /* Centers text within each paragraph */
+    max-width: 100%; /* Allow paragraphs to take full width needed */
+}
+.footer-bottom a {
+    color: #cbd5e1;
+    font-weight: 500;
+}
+.footer-bottom a:hover {
+    color: var(--color-background);
+}
+
+
+/* --- Animations --- */
+.fade-in, .fade-in-up {
+    opacity: 0;
+    transition: opacity 0.6s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.fade-in-up {
+    transform: translateY(20px);
+}
+.fade-in.in-view, .fade-in-up.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Specific Page Styling --- */
+
+/* About Page Text Content */
+.about-content-wrapper {
+    max-width: 800px; /* Increased from 75ch for a slightly wider layout */
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--text-secondary); /* From original about.html style */
+    line-height: 1.8; /* From original about.html style */
+    font-size: 1.05rem; /* From original about.html style */
+}
+.about-content-wrapper h3 { /* Style from original about.html */
+    color: var(--secondary-color); /* Needs --secondary-color defined or change this */
+    margin-top: 40px;
+    margin-bottom: 15px;
+}
+.about-content-wrapper ul {
+    list-style: none;
+    padding-left: 0;
+}
+.about-content-wrapper ul li {
+    padding-left: 30px; /* From original about.html style */
+    position: relative;
+    margin-bottom: 15px; /* From original about.html style */
+    display: flex; /* From original about.html style */
+    align-items: flex-start; /* From original about.html style */
+}
+.about-content-wrapper ul li span:first-child { /* Targeting the checkmark span */
+    position: absolute;
+    left: 0;
+    top: 3px; /* From original about.html style */
+    color: var(--color-primary);
+    font-weight: bold;
+    font-size: 1.2rem; /* From original about.html style */
+}
+.about-content-wrapper ul li div { /* The text content next to the checkmark */
+    /* No specific styles needed here unless different from default p */
+}
+
+/* Contact Page - Info section */
+.contact-info { /* Parent container for contact details */
+    /* No specific grid needed if it's just a list of paragraphs */
+}
+.contact-info h3 { /* Example style for "Contact Information:" heading */
+    color: var(--secondary-color); /* Needs --secondary-color or change */
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+}
+.contact-info p {
+    margin-bottom: 15px;
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* Campaign Detail Page */
+.campaign-detail-hero {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    padding: calc(var(--spacing-unit) * 5) 0;
+    text-align: center;
+}
+.campaign-detail-hero h1 {
+    color: var(--color-background);
+    margin-bottom: var(--spacing-unit);
+}
+.campaign-detail-hero .company-name {
+    font-size: 1.25rem;
+    opacity: 0.85;
+    color: var(--color-background); /* Ensure it inherits hero color */
+    margin-bottom: 0;
+}
+
+.campaign-detail-layout {
+    display: grid;
+    gap: calc(var(--spacing-unit) * 5);
+}
+@media (min-width: 992px) {
+    .campaign-detail-layout {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+.campaign-main-content h2, .campaign-main-content h3 {
+    margin-top: calc(var(--spacing-unit) * 3);
+}
+.campaign-main-content h2:first-child, .campaign-main-content h3:first-child {
+    margin-top: 0;
+}
+.campaign-main-content ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: var(--spacing-unit);
+}
+.campaign-main-content li {
+    padding-left: calc(var(--spacing-unit) * 3);
+    position: relative;
+    margin-bottom: var(--spacing-unit);
+    line-height: 1.7;
+}
+.campaign-main-content li::before {
+    content: '›'; /* Chevron or arrow */
+    color: var(--color-primary);
+    position: absolute;
+    left: 0;
+    top: 1px;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.campaign-sidebar .sidebar-card {
+    background-color: var(--color-background-alt);
+    padding: calc(var(--spacing-unit) * 3);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-border);
+    margin-bottom: calc(var(--spacing-unit) * 3); /* Space between cards */
+}
+.campaign-sidebar .sidebar-card:last-child {
+    margin-bottom: 0;
+}
+.campaign-sidebar .sidebar-card h3 { /* For "Quick Facts" */
+    font-size: 1.25rem;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    color: var(--color-text-primary);
+}
+.sidebar-info-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-unit);
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+    font-size: 0.9375rem;
+}
+.sidebar-info-item svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--color-primary);
+    flex-shrink: 0;
+}
+.sidebar-info-item strong {
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+/* Application Form in Sidebar */
+.campaign-sidebar .form-section {
+    padding: 0; /* Reset section padding */
+    background: transparent; /* Card has its own bg */
+    border: none;
+    box-shadow: none;
+}
+.campaign-sidebar .form-container { /* Overrides general .form-container for sidebar context */
+    padding: calc(var(--spacing-unit) * 3) calc(var(--spacing-unit) * 2.5); /* Match card padding */
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+    border: none;
+    box-shadow: none;
+    background: transparent; /* Form itself is transparent, relies on card bg */
+}
+.campaign-sidebar .form-container h2 { /* For "Apply for this Role" */
+    font-size: 1.7rem;
+    margin-bottom: calc(var(--spacing-unit) * 2.5);
+    text-align: left;
+    color: var(--color-text-primary);
+}
+
+/* --- Hero Section Enhancements --- */
+.hero {
+    position: relative; /* For positioning pseudo-elements */
+    overflow: hidden; /* To contain blurred pseudo-elements */
+    /* background-color: #0f0c29; /* Fallback solid color if gradients/images are complex */
+    /* Moving inline styles to CSS */
+    padding-top: clamp(4rem, 3vw + 3rem, 7rem);
+    padding-bottom: clamp(5rem, 5vw + 3rem, 9rem);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Example subtle gradient */
+}
+
+/* Optional: Subtle dot pattern for background texture */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Example: Subtle radial gradients for a "blob" or "aurora" effect */
+    background-image:
+        radial-gradient(circle at 15% 25%, hsla(250, 80%, 70%, 0.25), transparent 40%),
+        radial-gradient(circle at 80% 70%, hsla(200, 80%, 60%, 0.2), transparent 40%);
+    /* background-image: radial-gradient(var(--color-primary-hover) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.05; */
+    z-index: 0; /* Behind content */
+    filter: blur(60px); /* Soft blur for the gradient blobs */
+    transform: scale(1.5); /* Make blobs larger than viewport to avoid hard edges */
+}
+
+/* Optional: Another layer for more depth */
+/*
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, hsla(280, 70%, 60%, 0.15), transparent 70%);
+    border-radius: 50%;
+    filter: blur(70px);
+    z-index: 0;
+    pointer-events: none;
+}
+*/
+
+.hero .hero-content-container { /* Renamed from .hero .container for specificity */
+    position: relative; /* To ensure content is above pseudo-elements */
+    z-index: 1;
+    text-align: center; /* Content within is centered */
+    max-width: 800px; /* Copied from previous hero container styles */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero h1 {
+    /* Moving inline styles to CSS */
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    color: var(--color-background); /* White text for contrast on dark/gradient bg */
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2); /* Subtle shadow for readability */
+}
+
+.hero p {
+    /* Moving inline styles to CSS */
+    font-size: clamp(1.125rem, 0.5vw + 1rem, 1.375rem);
+    max-width: 65ch;
+    color: rgba(255, 255, 255, 0.85); /* Slightly transparent white for subtext */
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: calc(var(--spacing-unit) * 4);
+}
+
+.hero .btn-group {
+    /* Moving inline style to CSS */
+    margin-top: calc(var(--spacing-unit) * 5);
+    justify-content: center; /* Ensure buttons are centered */
+}
+
+.hero .btn-primary {
+    /* Moving inline styles to CSS */
+    padding: calc(var(--spacing-unit) * 1.75) calc(var(--spacing-unit) * 4);
+    font-size: 1.05rem;
+    /* Style for primary button on dark/gradient background */
+    background-color: var(--color-background); /* White background */
+    color: var(--color-primary); /* Primary color text */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+.hero .btn-primary:hover {
+    background-color: #f0f0f0; /* Slightly off-white hover */
+    color: var(--color-primary-hover);
+    transform: translateY(-2px) scale(1.02);
+}
+
+.hero .btn-secondary {
+    /* Moving inline styles to CSS */
+    padding: calc(var(--spacing-unit) * 1.75) calc(var(--spacing-unit) * 4);
+    font-size: 1.05rem;
+    /* Style for secondary button on dark/gradient background */
+    background-color: transparent;
+    color: var(--color-background); /* White text */
+    border-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white border */
+}
+.hero .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Slight white transparent bg on hover */
+    border-color: var(--color-background);
+    transform: translateY(-2px) scale(1.02);
+}
+
+/* --- Other sections remain styled as before --- */
+
+/* Example of incorporating previous inline styles from other sections */
+/* (Make sure to remove these from HTML if you add them here) */
+
+/* Unlock Your Potential Section - No changes needed based on provided HTML */
+
+/* How it Works Section - No changes needed based on provided HTML */
+
+/* The MissionDesk Difference Section */
+#why-missiondesk .section-title {
+    text-align: left;
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+}
+#why-missiondesk > .container > div > p { /* Targeting the main paragraph in this section */
+    color: var(--color-text-secondary);
+    font-size: 1.1rem;
+    max-width: 60ch;
+    margin-bottom: calc(var(--spacing-unit) * 4);
+}
+#why-missiondesk ul {
+    list-style: none;
+    padding-left: 0;
+}
+#why-missiondesk ul li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-unit);
+    margin-bottom: calc(var(--spacing-unit) * 2.5);
+}
+#why-missiondesk ul li svg {
+    width: 24px;
+    height: 24px;
+    color: var(--color-primary);
+    flex-shrink: 0;
+    margin-top: 3px; /* Align with text better */
+}
+#why-missiondesk ul li h4 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: calc(var(--spacing-unit) * 0.5);
+    color: var(--color-text-primary);
+}
+#why-missiondesk ul li p {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    margin-bottom:0;
+}
+
+/* Testimonials Section */
+#testimonials .testimonials-grid { /* Using existing features-grid, just for clarity */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+#testimonials .testimonial-item { /* Using existing feature-item */
+    background-color: var(--color-background-alt);
+    border: 1px solid var(--color-border);
+    display: flex; /* To push author to bottom */
+    flex-direction: column; /* Stack quote and author */
+}
+#testimonials .testimonial-item > p:first-child { /* The quote itself */
+    font-style: italic;
+    color: var(--color-text-primary);
+    font-size: 1.05rem;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    flex-grow: 1; /* Allow quote to take available space */
+}
+.testimonial-author {
+    display:flex;
+    align-items: center;
+    gap: var(--spacing-unit);
+    margin-top: auto; /* Pushes author to the bottom */
+}
+.testimonial-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-text-muted); /* Placeholder color */
+    /* background-image: url('path-to-avatar.jpg'); /* If you have images */
+    background-size: cover;
+    background-position: center;
+}
+.testimonial-author h4 {
+    font-size: 0.95rem;
+    margin-bottom: 0;
+    color: var(--color-text-primary);
+}
+.testimonial-author p {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    margin-bottom:0;
+}
+
+/* Final Call to Action Section */
+.cta-final-section { /* Using a class for this specific CTA */
+    background-color: var(--color-primary);
+}
+.cta-final-section .section-title {
+    color: var(--color-background);
+}
+.cta-final-section .section-subtitle {
+    color: rgba(255,255,255,0.85);
+    margin-bottom: calc(var(--spacing-unit) * 4);
+}
+.cta-final-section .btn-group {
+    justify-content: center;
+}
+.cta-final-section .cta-btn-primary { /* Primary button in this CTA */
+    background-color: var(--color-background);
+    color: var(--color-primary);
+    padding: calc(var(--spacing-unit) * 1.75) calc(var(--spacing-unit) * 4);
+    font-size: 1.05rem;
+}
+.cta-final-section .cta-btn-primary:hover {
+    background-color: #f0f0f0;
+    color: var(--color-primary-hover);
+}
+.cta-final-section .cta-btn-secondary { /* Secondary button in this CTA */
+    border: 1px solid var(--color-background);
+    background-color: transparent;
+    color: var(--color-background);
+    padding: calc(var(--spacing-unit) * 1.75) calc(var(--spacing-unit) * 4);
+    font-size: 1.05rem;
+}
+.cta-final-section .cta-btn-secondary:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+/* Footer Contact Item SVGs - ensure flex-shrink is set */
+.footer-contact-item svg {
+    /* width:16px; height:16px; */ /* Already set in HTML */
+    flex-shrink:0;
+}
+
+
+/* ... (Rest of your existing CSS) ... */
+
+/* In style.css */
+.opportunities-grid-section .campaign-grid > h2.company-group-title {
+    grid-column: 1 / -1; /* Span all columns */
+    text-align: left;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    margin-top: calc(var(--spacing-unit) * 4); /* Add more space above company name */
+    font-size: 1.5rem; /* Or your preferred size */
+    color: var(--color-text-primary);
+    padding-bottom: var(--spacing-unit);
+    border-bottom: 1px solid var(--color-border); /* Optional separator */
+}
+
+.opportunities-grid-section .campaign-grid > h2.company-group-title:first-of-type {
+    margin-top: calc(var(--spacing-unit) * 2); /* Less top margin for the very first one */
+}
+
+.campaign-card.coming-soon-card {
+    opacity: 0.7;
+    pointer-events: none; /* Makes the card non-interactive */
+}
+.campaign-card.coming-soon-card .campaign-card-header {
+    background-color: var(--color-background-alt); /* Or a more muted color */
+}
+.campaign-card.coming-soon-card h3 a {
+    pointer-events: none;
+    cursor: default;
+}
+
+/* ... (Keep all existing CSS) ... */
+
+/* Page Introduction Section Styling (for list-your-campaign, contact, about etc.) */
+.page-intro-section {
+    /* You might want a subtle background or specific padding here */
+    /* background-color: var(--color-background-alt); */
+    padding-bottom: calc(var(--spacing-unit) * 5); /* Adjust as needed */
+}
+.page-intro-section .container {
+    text-align: center;
+    max-width: 800px;
+}
+.page-intro-section .section-title {
+    margin-bottom: calc(var(--spacing-unit) * 2);
+}
+.page-intro-section .section-subtitle {
+    margin-top: 0;
+    margin-bottom: calc(var(--spacing-unit) * 3);
+}
+.btn-lg { /* For a slightly larger button */
+    padding: calc(var(--spacing-unit) * 1.75) calc(var(--spacing-unit) * 4);
+    font-size: 1.05rem;
+}
+
+
+/* Modal Styling */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 2000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.6); /* Black w/ opacity for backdrop */
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+    background-color: var(--color-background);
+    margin: 5% auto; /* 5% from the top and centered */
+    padding: 0; /* Padding will be handled by modal-header and modal-body */
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    width: 90%;
+    max-width: 768px; /* Max width for the form */
+    box-shadow: var(--box-shadow-lg);
+    animation: slideInUp 0.4s ease-out;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh; /* Limit height to 90% of viewport height */
+}
+
+.modal-header {
+    padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 3);
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.modal-header h2 {
+    margin-bottom: 0;
+    font-size: 1.5rem; /* Adjust as needed */
+    color: var(--color-text-primary);
+}
+
+.modal-close-btn {
+    color: var(--color-text-muted);
+    font-size: 2rem; /* Larger close button */
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 calc(var(--spacing-unit) * 0.5);
+    line-height: 1;
+}
+.modal-close-btn:hover,
+.modal-close-btn:focus {
+    color: var(--color-text-primary);
+    text-decoration: none;
+}
+
+.modal-body {
+    padding: calc(var(--spacing-unit) * 3) calc(var(--spacing-unit) * 4);
+    overflow-y: auto; /* Enable scroll for form content if it's too long */
+    flex-grow: 1; /* Allow body to take up available space */
+}
+
+/* Modal form-container specific styles if needed */
+.modal-body.form-container h3 {
+    margin-top: calc(var(--spacing-unit) * 2.5); /* Adjust top margin for h3 inside modal */
+}
+.modal-body.form-container h3:first-of-type {
+    margin-top: 0;
+}
+.modal-body.form-container .form-group label {
+    font-size: 0.875rem; /* Slightly smaller labels in modal if desired */
+}
+
+/* Animations for modal */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+@keyframes slideInUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+@keyframes slideOutDown {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(50px); opacity: 0; }
+}
+
+.modal.fade-out {
+    animation: fadeOut 0.3s ease-out forwards;
+}
+.modal.fade-out .modal-content {
+    animation: slideOutDown 0.4s ease-out forwards;
+}
+
+
+/* Ensure body scroll is prevented when modal is open */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* style.css additions (if not already present or need minor adjustments) */
+
+/* ... (navbar, buttons, typography, footer styles as before) ... */
+
+/* Campaign Detail Hero (header for the campaign title) */
+.campaign-detail-hero {
+    background-color: var(--color-primary); /* Or another thematic color */
+    color: var(--color-background);
+    padding: calc(var(--spacing-unit) * 4) 0 calc(var(--spacing-unit) * 5); /* Adjusted padding */
+    text-align: center;
+}
+.campaign-detail-hero h1 {
+    color: var(--color-background);
+    margin-bottom: var(--spacing-unit);
+    font-size: clamp(2rem, 1.5rem + 2vw, 3rem); /* Consistent with section titles */
+}
+.campaign-detail-hero .company-name {
+    font-size: 1.25rem; /* Consistent with other sub-headings */
+    opacity: 0.9;
+    color: var(--color-background);
+    margin-bottom: 0;
+}
+
+/* Main section for campaign details */
+.campaign-content-section { /* Specific class for this page's main content */
+    padding-top: calc(var(--spacing-unit) * 5); /* Standardized padding */
+    padding-bottom: calc(var(--spacing-unit) * 5);
+}
+
+.campaign-detail-layout {
+    display: grid;
+    gap: calc(var(--spacing-unit) * 5); /* 40px */
+}
+@media (min-width: 992px) { /* Desktop layout */
+    .campaign-detail-layout {
+        grid-template-columns: 2fr 1fr; /* Main content takes more space */
+    }
+}
+
+.campaign-main-content h2, .campaign-main-content h3 {
+    margin-top: calc(var(--spacing-unit) * 3.5); /* Spacing for subheadings */
+    color: var(--color-text-primary); /* Ensure standard heading color */
+}
+.campaign-main-content h2:first-child, .campaign-main-content h3:first-child {
+    margin-top: 0; /* No top margin for the first heading in the article */
+}
+.campaign-main-content ul {
+    list-style-type: none; /* Remove default bullets */
+    padding-left: 0;
+    margin-top: var(--spacing-unit);
+    margin-bottom: calc(var(--spacing-unit) * 2); /* Space after lists */
+}
+.campaign-main-content li {
+    padding-left: calc(var(--spacing-unit) * 3); /* Indent for custom bullet */
+    position: relative;
+    margin-bottom: var(--spacing-unit);
+    line-height: 1.7;
+    color: var(--color-text-secondary); /* Text color for list items */
+}
+.campaign-main-content li::before {
+    content: '›'; /* Chevron, arrow, or other preferred icon */
+    color: var(--color-primary);
+    position: absolute;
+    left: 0;
+    top: 1px; /* Adjust vertical alignment if needed */
+    font-weight: bold;
+    font-size: 1.2em; /* Size of the custom bullet */
+}
+
+/* Sidebar Styling */
+.campaign-sidebar .sidebar-card {
+    background-color: var(--color-background-alt);
+    padding: calc(var(--spacing-unit) * 3);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-border);
+    margin-bottom: calc(var(--spacing-unit) * 3); /* Space between cards */
+    box-shadow: var(--box-shadow-sm); /* Subtle shadow */
+}
+.campaign-sidebar .sidebar-card:last-child {
+    margin-bottom: 0;
+}
+
+.campaign-sidebar .sidebar-card h3 { /* For "Quick Facts" */
+    font-size: 1.25rem; /* Consistent heading size */
+    margin-bottom: calc(var(--spacing-unit) * 2.5);
+    color: var(--color-text-primary);
+    padding-bottom: var(--spacing-unit);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.sidebar-info-item {
+    display: flex;
+    align-items: center; /* Vertically align icon and text */
+    gap: var(--spacing-unit);
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+    font-size: 0.9375rem; /* 15px */
+    color: var(--color-text-secondary);
+}
+.sidebar-info-item svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--color-primary);
+    flex-shrink: 0; /* Prevent icon from shrinking */
+}
+.sidebar-info-item strong {
+    font-weight: 600; /* Bolder for emphasis */
+    color: var(--color-text-primary);
+}
+
+/* Application Form Card in Sidebar */
+.campaign-sidebar .application-form-card {
+    /* This card might have a slightly different background or no explicit background
+       if the form-container inside it provides one. Assuming it's like other sidebar cards. */
+    /* If you want the form itself to have the card styling, apply .sidebar-card to the .form-container directly */
+    padding: 0; /* Remove card padding if form-container has its own */
+    background: var(--color-background); /* Usually forms are on the main background */
+    border: 1px solid var(--color-border);
+    box-shadow: var(--box-shadow-sm);
+}
+.campaign-sidebar .form-container {
+    /* This now targets the form container inside the application-form-card */
+    padding: calc(var(--spacing-unit) * 3) calc(var(--spacing-unit) * 2.5);
+    border: none; /* Remove border if card has it */
+    box-shadow: none; /* Remove shadow if card has it */
+    background: transparent; /* Form itself is transparent, card provides bg */
+}
+.campaign-sidebar .form-container h2 { /* "Apply for this Role" */
+    font-size: 1.5rem; /* Adjust as needed */
+    margin-bottom: calc(var(--spacing-unit) * 2.5);
+    text-align: left;
+    color: var(--color-text-primary);
+}
+/* Ensure form elements inside sidebar are well-styled */
+.campaign-sidebar .form-group label {
+    font-size: 0.875rem;
+}
+
+/* In style.css */
+.about-content-wrapper {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    /* These styles were originally inline on the div */
+    color: var(--text-secondary); 
+    line-height: 1.8; 
+    font-size: 1.05rem; 
+}
+.about-content-wrapper p { /* General paragraphs within this wrapper */
+    color: var(--text-secondary); /* Ensure it inherits or is set */
+    line-height: 1.8;
+    font-size: 1.05rem;
+    margin-bottom: calc(var(--spacing-unit) * 2); /* Standard p margin */
+}
+.about-content-wrapper h3 {
+    /* The color var(--secondary-color) was used. Ensure this is defined in :root or change to var(--color-primary) or var(--color-text-primary) */
+    color: var(--color-primary); /* Example: using primary color for these headings */
+    margin-top: calc(var(--spacing-unit) * 5); /* Was 40px */
+    margin-bottom: calc(var(--spacing-unit) * 2); /* Was 15px or 20px */
+}
+.about-content-wrapper ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: calc(var(--spacing-unit) * 2); /* Add some space before the list */
+}
+.about-content-wrapper ul li {
+    padding-left: 30px; 
+    position: relative;
+    margin-bottom: 15px; 
+    display: flex; 
+    align-items: flex-start; 
+}
+.about-content-wrapper ul li::before { /* Replaces the span for the checkmark */
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 3px; 
+    color: var(--color-primary);
+    font-weight: bold;
+    font-size: 1.2rem; 
+}
+.about-content-wrapper ul li div { /* The text content next to the checkmark */
+    /* No specific styles needed here usually, inherits from parent p or li */
+}
+.about-content-wrapper ul li div strong {
+    color: var(--color-text-primary); /* Make strong text darker */
+    font-weight: 600;
+}
+
+/* For the new page header section */
+.page-header-section {
+    /* background-color: var(--color-background-alt); /* Optional: if you want a distinct bg */
+    text-align: center;
+    padding-bottom: calc(var(--spacing-unit) * 3); /* Reduce bottom padding if content follows closely */
+}
+.page-header-section .section-title {
+    margin-bottom: var(--spacing-unit);
+}
+.page-header-section .section-subtitle {
+    margin-top: 0;
+}
+/* style.css additions */
+
+/* ... (Keep all existing CSS: navbar, page-header-section, section-title, section-subtitle, footer, etc.) ... */
+
+/* Contact Page Specific Styling */
+.contact-details-section { /* The main section holding contact info */
+    /* padding-top: calc(var(--spacing-unit) * 3); /* Adjust if needed, page-header might provide enough */
+}
+
+.contact-info-container {
+    max-width: 800px; /* Or your preferred max-width for this content block */
+    margin-left: auto;
+    margin-right: auto;
+    padding: calc(var(--spacing-unit) * 3);
+    background-color: var(--color-background-alt); /* Light background for the contact block */
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow-sm);
+}
+
+.contact-info-title {
+    text-align: center;
+    font-size: 1.75rem; /* Adjust as needed */
+    color: var(--color-text-primary);
+    margin-bottom: calc(var(--spacing-unit) * 4);
+}
+
+.contact-methods-grid {
+    display: grid;
+    gap: calc(var(--spacing-unit) * 3);
+    /* grid-template-columns: 1fr; /* Mobile: 1 column */
+    /* On larger screens, you might want 2 or 3 columns */
+     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+}
+
+.contact-method-item {
+    background-color: var(--color-background);
+    padding: calc(var(--spacing-unit) * 2.5) calc(var(--spacing-unit) * 3);
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--color-border);
+    text-align: center; /* Center content within each item */
+    transition: var(--transition-base);
+}
+.contact-method-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--box-shadow-md);
+}
+
+.contact-method-icon {
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+    display: inline-flex; /* To center the SVG if it's not full width */
+}
+.contact-method-icon svg {
+    width: 36px; /* Adjust icon size */
+    height: 36px;
+    fill: var(--color-primary);
+}
+
+.contact-method-item h4 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-unit);
+}
+
+.contact-method-item p {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0; /* Remove default p margin if it's the last element */
+}
+.contact-method-item p a {
+    color: var(--color-primary); /* Ensure links are styled */
+}
+.contact-method-item p a:hover {
+    color: var(--color-primary-hover);
+}
+
+.contact-response-time {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    margin-top: calc(var(--spacing-unit) * 4);
+}
+
+/* Optional Map Section Styling (if you uncomment it) */
+.map-section {
+    padding-top: calc(var(--spacing-unit) * 5);
+}
+.map-section .section-title {
+    margin-bottom: calc(var(--spacing-unit) * 3);
+}
+.map-placeholder {
+    width:100%;
+    height:400px;
+    background-color: var(--color-background-alt);
+    border:1px solid var(--color-border);
+    border-radius:var(--border-radius-lg);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+/* ... (Keep all existing CSS styles) ... */
+
+/* List Your Campaign Form Specific Grid Layout */
+.list-campaign-form-grid {
+    display: grid;
+    gap: 0 calc(var(--spacing-unit) * 4); /* Column gap, no row gap between direct children */
+}
+
+/* On medium screens and up, display form sections side-by-side */
+@media (min-width: 769px) {
+    .list-campaign-form-grid {
+        grid-template-columns: 1fr 1fr; /* Two equal columns */
+    }
+    /* Make campaign description span both columns if it's too narrow */
+    .list-campaign-form-grid .campaign-description-group {
+        grid-column: 1 / -1; /* Span across all columns if form is in 2-col layout */
+    }
+}
+
+.form-section-group {
+    margin-bottom: calc(var(--spacing-unit) * 3); /* Space below each group of fields */
+}
+
+.form-section-group h3 {
+    /* Uses existing .form-section .form-container h3 styling */
+    /* You can add more specific overrides if needed */
+    margin-top: 0; /* Remove top margin if it's the first element in its group */
+}
+.list-campaign-form-grid > .form-section-group:first-child h3 {
+    margin-top: 0; /* Ensure first h3 in the form has no top margin */
+}
+
+
+/* Ensure the button and feedback span all columns */
+.list-campaign-form-grid > button[type="submit"],
+.list-campaign-form-grid > .form-feedback {
+    grid-column: 1 / -1; /* Make them span all available columns */
+}
+
+/* Spinner for form submissions */
+.spinner { 
+    animation: rotate 1s linear infinite; 
+    width: 1.25em; 
+    height: 1.25em; 
+    margin-right: 0.5em; 
+    display: inline-block; 
+    vertical-align: middle; 
+}
+.spinner .path { 
+    stroke: currentColor; /* Will inherit button text color */
+    stroke-linecap: round; 
+    animation: dash 1.5s ease-in-out infinite; 
+    fill:none; 
+    stroke-width: 5px; /* Make spinner lines thicker if needed */
+}
+@keyframes rotate { 100% { transform: rotate(360deg); } }
+@keyframes dash {
+    0% { stroke-dasharray: 1, 150; stroke-dashoffset: 0; }
+    50% { stroke-dasharray: 90, 150; stroke-dashoffset: -35; }
+    100% { stroke-dasharray: 90, 150; stroke-dashoffset: -124; }
+}
